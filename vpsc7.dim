@@ -1,0 +1,127 @@
+C *****************************************************************************
+C     VPSC7.DIM      --->      VERSION 10/JAN/2009
+C     COMMON & PARAMETERS TO BE INCLUDED DURING COMPILATION OF VPSC7.FOR
+C *****************************************************************************
+      PARAMETER(NELMX =1)       ! MAXIMUM # OF ELEMENTS
+      PARAMETER(NPHPEL=2)       ! MAXIMUM # OF PHASES PER ELEMENT
+      PARAMETER(NPHMX =2)       ! MAXIMUM # OF PHASES OVER ALL ELEMENTS
+      PARAMETER(NGRPEL=16000)   ! MAXIMUM # OF GRAINS PER ELEMENT
+      PARAMETER(NGRMX =16000)   ! MAXIMUM # OF GRAINS OVER ALL PHASES & ELEMS
+      PARAMETER(NMODMX=108)     ! MAXIMUM # OF ACTIVE SL+TW MODES IN ANY PHASE
+      PARAMETER(NTWMMX=2)       ! MAXIMUM # OF ACTIVE TWIN  MODES IN ANY PHASE
+      PARAMETER(NSYSMX=108)     ! MAXIMUM # OF ACTIVE SL+TW SYSTEMS IN ANY PHASE
+      PARAMETER(NTWSMX=20)      ! MAXIMUM # OF ACTIVE TWIN  SYSTEMS IN ANY PHASE
+      PARAMETER(NNEIMX=6)       ! MAXIMUM # OF NEIGHBOURS
+      PARAMETER(NMXSTP=50)      ! MAXiMUM # OF STEPS FOR PROCESSES-YOUNGUNG
+      PARAMETER(NMXPRCS=5)      ! MAXIMUM # OF PROCESSES
+
+      CHARACTER*80 FILETEXT,FILECRYS,FILEAXES,FILEHIST,PROSA,LABEL
+
+      INTEGER  UR0,UR1,UR2,UR3,UR4,UR5,UR6,UW1,UW2,UW3,UW4,UW5
+      INTEGER  STRAIN_CONTROL
+
+      COMMON/ASTER/ SASTAV(5),SASTBAR(5),DAST(5)
+      COMMON/AVERAGE/ SAV(5),DAV(5),SBAR(5),DBAR(5),DTOT(5),DTOT6(6),
+     $     DBARTOT(5),SCAU(6),SCAU6T,SBART(5),DDIL,
+cq   ABQ STD
+cq    $     TFACTPER(7),DTOTPER(5,7),SBARPER(6,7),DTPER,DDILPER(7),
+     $     XMTG(5,5),XLTG(5,5),DZERO(5),SVM,DVM,EPSACU,C4GA(3,3,3,3)
+CFEB
+     $     ,STDEVS(5),STDEVD(5),
+     $     EPSTOT(3,3),EPSVM,EIJINCR,EVMINCR,TEMPERAT,
+     $     RSLBAR,RLCBAR
+CFEE
+      COMMON/DATACRYST/DNCA(3,NSYSMX,NPHPEL),DBCA(3,NSYSMX,NPHPEL),
+     $     SCHCA(5,NSYSMX,NPHPEL),HARD(NSYSMX,NSYSMX,NPHPEL),
+     $     TAU(NSYSMX,0:1,NPHPEL),THET(NSYSMX,0:1,NPHPEL),
+CFEB
+     $     HPFAC(NSYSMX,NPHPEL),GNDFAC(NSYSMX,NPHPEL),GRSZE,
+CFEE
+     $     NRS(NSYSMX,NPHPEL),ISENSE(NSYSMX,NPHPEL)
+      COMMON/DATAGRAIN/AG(3,3,NGRMX),WGT(NGRMX),NGR(0:NPHMX)
+CFEB
+     $     ,AXISGR(0:3,3,NGRMX),FIJGR(3,3,NGRMX),XLIJGR(3,3,NGRMX),
+     $     ASGR(3,3,3,3,NGRMX),XMASTGR(5,5,NGRMX)
+      COMMON/CAUCHY/D5GR(5,NGRMX),D5PH(5,NPHMX),PREMAC
+CFEE
+      COMMON/DATAMODES/TWTHRES(2,NTWMMX,NPHPEL),TWSH(NTWMMX,NPHPEL),
+     $     NMODES(NPHPEL),NSLMOD(NPHPEL),NTWMOD(NPHPEL),
+     $     NSYST(NPHPEL),NTWSYS(NPHPEL),NSLSYS(NPHPEL),
+     $     NSM(NMODMX,NPHPEL),ISECTW(NSYSMX,NPHPEL)
+      COMMON/DATAPHASE/WPH(NPHMX),EULERPH(3,0:NPHMX),
+     $     AXISPH(0:3,3,0:NPHMX),FIJPH(3,3,0:NPHMX),
+     $     XLIJPH(3,3,NPHMX),ASPH(3,3,3,3,NPHMX),XMASTPH(5,5,NPHMX),
+     $     FSPH(5,5,NPHMX),XIMSINVPH(5,5,NPHMX),
+     $     NPH,NELEM,IPHBOT,IPHTOP,
+     $     ISHAPE(0:NPHMX),IFLAT(0:NPHMX),IFRAG(NPHMX),CRIT_SHP(NPHMX)
+      COMMON/GRAINPROPS/CRSS(NSYSMX,NGRMX),SG(6,NGRMX),GTOTGR(NGRMX),
+     $     DG(5,NGRPEL),GAMD0G(NGRPEL),STRY(5,NGRPEL),
+     $     GAMDOT(NSYSMX,NGRPEL),SCH(5,NSYSMX,NGRPEL),
+     $     XMCTG(5,5,NGRPEL),DCZERO(5,NGRPEL),BC(5,5,NGRPEL),
+     $     PHIC(5,NGRPEL)
+CFEB
+     $     ,TAUE(NSYSMX,NGRMX)
+     $     ,BETFLU(5,5,NGRPEL),CHIFLU(5,5,NGRPEL)
+CFEE
+      COMMON/FILES/ FILETEXT,FILECRYS,FILEAXES,FILEHIST,PROSA,LABEL(10)
+      COMMON/IOUNITS/ UR0,UR1,UR2,UR3,UR4,UR5,UR6,UW1,UW2,UW3,UW4,UW5
+      COMMON/MISCEL/  ZERO33(3,3),PI,XID5(5,5),XID3(3,3),JRAN
+      COMMON/RUNCOND/ ERR,ERRS,ERRD,ERRM,ERRSO,
+     $     ITMAXEXT,ITMAXINT,ITMAXSO,IRECOVER,ISAVE,NPROC,
+     $     ICAUCHY,IVGVAR,NWRITE,INTERACTION,ICUBCOM,ICS,
+     $     NUNIQUE,NRSMIN,IHARDLAW,IRATESENS,ICOMPGRAIN,
+     $     IUPDORI,IUPDSHP,IUPDHAR,IBCINV,IRSVAR,IFLU,
+     $     jxrs,jxrsini,jxrsfin,jxrstep
+CFEB
+      COMMON/RXL1/EGVM(NGRMX),WORK(NGRMX),SGVM(NGRPEL),TAYLORG(NGRPEL),
+     $     EGVMSTEP(NGRPEL)
+      COMMON/STATSH/GMAX(NMODMX,NPHMX),GAVMOD(NMODMX,NPHMX),
+     $     GAVPH(NPHMX),GTOT(NMODMX,NGRMX),GAVGR(NGRMX),
+     $     ACT(NGRMX),ACTIV(NPHMX)
+CFEE
+      COMMON/STATTW/EFTWFR(NTWMMX,NPHMX),TWFRPH(NTWMMX,NPHMX),
+     $     TWFRSY(NTWSMX,NGRMX),KTWSMX(NGRMX),NTWEVENTS(NGRMX)
+CFEB
+     $     ,KTWMMX(NGRMX),PRITW(NPHMX),SECTW(NPHMX)
+CFEE
+      COMMON/TESTCOND/SCAUCHY(3,3),UDOT(3,3),DSIM(3,3),ROTBAR(3,3),
+     $     SDEVIAT(3,3),
+     $     TINCR,DSIMCTRL,STRAIN_CONTROL,ICTRL,
+     $     IDSIM(6),ISCAU(6),IUDOT(3,3),NSTEPS
+CFEB
+      COMMON/TWIN/SYSMFP(NSYSMX,NTWSMX),TWINBAR,ICOMPGR(NGRMX),ISLIPTR
+CFEE
+      COMMON/NEIGHB/WNEIGH(0:NNEIMX,NGRPEL),NEIGH(0:NNEIMX,NGRPEL),
+     $     NNEIGH
+      COMMON/ELASTIC/C2CA(6,6,NPHPEL),CGR(6,6,NGRPEL),CSC(6,6),SSC(6,6)
+CFEB
+      COMMON/FLUCT/SEQ2(NGRPEL),DEQ2(NGRPEL),
+     $     SDSEQINTER,SDDEQINTER,SDSEQINTRA,SDDEQINTRA,
+     $     ASO(NSYSMX,NGRPEL),ESO(NSYSMX,NGRPEL),
+     $     SECMOM5(5,5,NGRPEL),SECMOM5D(5,5,NGRPEL),UTILDE
+CFEE
+      COMMON/TRANSF/inucleation(ngrmx)
+CFEE 
+CFEB
+c      COMMON/F2PY/DBAR_(NMXPRCS,NMXSTP,5), SBAR_(NMXPRCS,NMXSTP,5)
+C     FEE
+
+      common/dislocation/denf(nsysmx, nphpel), denr(nsysmx, nphpel),
+     $     burgers(nsysmx, nphpel), fmp(nsysmx, nphpel),
+     $     grsize(nsysmx, nphpel), fdisln(nsysmx, nphpel),
+     $     thermeff(nsysmx, nphpel), shearm(nsysmx, nphpel),
+     $     ftau0(nsysmx, nphpel), prgamdot(nsysmx, ngrpel)
+      
+c     below is the old common block for dislocation hardening
+c$$$      common/dislocation/amu_disl(nsysmx, nphpel),
+c$$$     $     b_disl(nsysmx, nphpel), df_disl(nsysmx, nphpel),
+c$$$     $     p_disl(nsysmx, nphpel), aK_disl(nsysmx, nphpel),
+c$$$     $     grs_disl(nsysmx, nphpel), tau_disl(nsysmx, nphpel),
+c$$$     $     prgamdot(nsysmx, ngrpel), iload_flag(nsysmx, ngrpel),
+c$$$     $     d_last_disl(nsysmx, ngrpel),
+c$$$     $     d_disl_gr(nsysmx, ngrpel),
+c$$$     $     f_gr(nsysmx, nphpel)
+      
+c     Due to the rate-dependent nature in the power-law,
+c     It is necessary to find slip systems that less
+c     contribute to the total deformation in a grain.      
