@@ -930,14 +930,14 @@ class polefigure:
 
                 pcm = axp.pcolormesh(
                     phi.copy(), r.copy(), pf.T,
-                    ls='None'
+                    #ls='None'
                     #alpha= 0.75,
                     #cmap = plt.cm.gray_r
                     )
                 
                 pcmr = axr.pcolormesh(
                     phi.copy(), rr.copy(), pfr,
-                    ls='None'
+                    #ls='None'
                     #alpha= 0.75,
                     #cmap = plt.cm.gray_r
                     )
